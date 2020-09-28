@@ -1,3 +1,4 @@
+# coding=UTF-8
 import os
 
 from flask import Flask
@@ -15,4 +16,4 @@ db = SQLAlchemy(app)
 from app.home import home as home_blueprint
 
 
-app.register_blueprint(home_blueprint, url_prefix="/model")
+app.register_blueprint(home_blueprint, url_prefix="/trace")

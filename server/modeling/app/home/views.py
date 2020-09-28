@@ -114,8 +114,9 @@ def discretize_y():
                 row_data = [float(l) for l in row]
                 # 数值小于等于分界值，则置为1，否则置为2
                 for var in y_list:
-                    index = int(var["id"]) - 1  # y的id
-                    disv = float(var["min"])  # y在步骤2设置的临界值
+                    index = int(var["id"]) - 1
+                    # disv = float(var["min"])
+                    disv = float(var["disv"])
                     row_data[index] = 1 if row_data[index] <= disv else 2  # python三目运算
                 csv_writer.writerow(row_data)
 
@@ -176,8 +177,7 @@ def discretize_y():
             srcdb = que["src"]
             desdb = que["des"]
             # 找出所有与x有关的指标
-            # filter => where *=* ; exclude => where *!=*
-            rels = srcdb.query.filter(and_(srcdb.qualityParameterNameRow==row,srcdb.valueQualityType!=0))
+            rels = srcdb.query.filter(and_(srcdb.qualityParameterNameRow == row, srcdb.valueQualityType != 0)).all()
             rels_names = []
             for rel in rels:
                 rels_names.append(desdb.query.all()[int(rel.qualityParameterNameRank)].qualityParameterName)
@@ -378,7 +378,9 @@ def construct_model():
             # tmp_np_array = tmp_np_array.transpose()
             tmp_table["table"] = tmp_np_array.tolist()
             ret_json["tables"].append(tmp_table)
+    print("---------------")
     print(ret_json)
+    print("---------------")
     return jsonify(ret_json)
 
 @home.route("/use-model/")

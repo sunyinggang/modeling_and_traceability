@@ -41,7 +41,8 @@ class GqGq(db.Model):
 
 class VGq(db.Model):
     __tablename__ = "v_gq"  # 指明对应的数据库表名
-    qualityParameterNameRow = db.Column(db.String(255), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    qualityParameterNameRow = db.Column(db.String(255))
     qualityParameterNameRank = db.Column(db.String(255))
     valueQualityType = db.Column(db.String(255))
     bvalue = db.Column(db.Float)
